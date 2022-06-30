@@ -8,5 +8,19 @@ namespace Fiap.Web.AspNet3.Controllers
         {
             return View();
         }
+
+        public IActionResult About()
+        {
+            return View("AboutUs");
+        }
+
+        public IActionResult Content()
+        {
+            //return Content("Retornando o conteudo em formato String");
+            //return View("Index");
+            return RedirectToAction("Index","Home");
+        }
+
+
     }
 }
