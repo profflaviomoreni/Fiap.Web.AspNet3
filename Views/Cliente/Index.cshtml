@@ -10,6 +10,11 @@
 
 
             <h1>Clientes</h1>
+
+            @if ( ! String.IsNullOrEmpty((String) TempData["mensagem"]) ) {
+                <h2>@TempData["mensagem"]</h2>
+            }
+
             <p class="toolbar">
                 <a class="create btn btn-dark" href="/cliente/novo">Novo Cliente</a>
             </p>
