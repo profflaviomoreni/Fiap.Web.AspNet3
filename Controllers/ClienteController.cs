@@ -11,6 +11,7 @@ namespace Fiap.Web.AspNet3.Controllers
         {
             // Simulando uma busca no banco de dados
             
+            
             var listaClientes = new List<ClienteModel>();
             
             listaClientes.Add(new ClienteModel {
@@ -58,16 +59,23 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpPost]
         public IActionResult Novo(ClienteModel clienteModel)
         {
-            // Recuperar as informações do cliente digitado
 
-            // Cadastrar no banco de dados (Fake)
-            // bancoDados.Cliente.Save(clienteModel);
+            if (ModelState.IsValid)
+            {
+                // Recuperar as informações do cliente digitado
+                // Cadastrar no banco de dados (Fake)
+                // bancoDados.Cliente.Save(clienteModel);
+                // Exibir uma tela de sucesso. OK
 
-            // Exibir uma tela de sucesso. OK
+                TempData["mensagem"] = $"Cliente {clienteModel.Nome} cadastrado com sucesso";
+                return RedirectToAction("Index");
+            } 
+            else
+            {
+                return View(clienteModel);
+            }
 
-            TempData["mensagem"] = "Cliente cadastrado com sucesso";
-
-            return RedirectToAction("Index");
+            
         }
 
 
@@ -122,7 +130,21 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpPost]
         public IActionResult Editar(ClienteModel clienteModel)
         {
-            return View("Sucesso");
+            if (ModelState.IsValid)
+            {
+                // Recuperar as informações do cliente digitado
+                // Cadastrar no banco de dados (Fake)
+                // bancoDados.Cliente.Save(clienteModel);
+                // Exibir uma tela de sucesso. OK
+
+                TempData["mensagem"] = $"Cliente {clienteModel.Nome} editado com sucesso";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(clienteModel);
+            }
+
         }
 
 
