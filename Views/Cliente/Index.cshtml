@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<ClienteModel>
 
-@{
-}
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -19,37 +15,7 @@
                 <a class="create btn btn-dark" asp-controller="Cliente" asp-action="Novo">Novo Cliente</a>
             </p>
 
-            <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th data-field="id">Id</th>
-                        <th data-field="name">Nome</th>
-                        <th class="actions" width="220">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach( var cliente in Model) {
-                    <tr>
-                        <td data-field="id">@cliente.ClienteId</td>
-                        <td data-field="name">@cliente.Nome</td>
-                        <td class="actions" width="220">
-
-                            <a  asp-controller="cliente" 
-                                asp-action="detalhe" 
-                                asp-route-id="@cliente.ClienteId"  
-                                class="btn btn-info btn-sm">Detalhe</a>
-
-                            <a  asp-controller="cliente" 
-                                asp-action="editar" 
-                                asp-route-id="@cliente.ClienteId" 
-                                class="btn btn-warning btn-sm">Editar</a>
-                        </td>
-                    </tr>
-                    }
-                    
-                </tbody>
-            </table>
+            <partial name="_ClienteItem" model="Model" />
 
         </div>
     </div>
