@@ -2,7 +2,6 @@
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet3.Controllers
 {

@@ -18,6 +18,8 @@ namespace Fiap.Web.AspNet3.Data
 
         public DbSet<RepresentanteModel> Representantes { get; set; }
 
+        public DbSet<GerenteModel> Gerentes { get; set; }
+
         
 
     }
