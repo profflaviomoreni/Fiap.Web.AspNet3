@@ -14,9 +14,9 @@ namespace Fiap.Web.AspNet3.Repository
         }
 
 
-        public List<GerenteModel> FindAll()
+        public List<FornecedorModel> FindAll()
         {
-            return dataContext.Gerentes.ToList<GerenteModel>();
+            return dataContext.Fornecedores.ToList<FornecedorModel>();
         }
 
         public FornecedorModel FindById(int id)
