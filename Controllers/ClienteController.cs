@@ -61,43 +61,10 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            //var clienteModel = bancoDados.Cliente.Search(id);
-            var clienteModel = new ClienteModel();
+            var listaRepresentantes = representanteRepository.FindAll();
+            ViewBag.representantes = listaRepresentantes;
 
-            if (id == 1)
-            {
-                clienteModel = new ClienteModel
-                {
-                    ClienteId = 1,
-                    Nome = "Flavio",
-                    Email = "fmoreni@gmail.com",
-                    DataNascimento = DateTime.Now,
-                    Observacao = "OBS1"
-                };
-            }
-            else if (id == 2)
-            {
-                clienteModel = new ClienteModel
-                {
-                    ClienteId = 2,
-                    Nome = "Eduardo",
-                    Email = "eduardo@gmail.com",
-                    DataNascimento = DateTime.Now,
-                    Observacao = "OBS3"
-                };
-            }
-            else 
-            {
-                clienteModel = new ClienteModel
-                {
-                    ClienteId = 3,
-                    Nome = "Moreni",
-                    Email = "moreni@gmail.com",
-                    DataNascimento = DateTime.Now,
-                    Observacao = "OBS3"
-                };
-            }
-
+            var clienteModel = clienteRepository.FindById(id);
 
             return View(clienteModel);
         }
@@ -111,16 +78,16 @@ namespace Fiap.Web.AspNet3.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Recuperar as informações do cliente digitado
-                // Cadastrar no banco de dados (Fake)
-                // bancoDados.Cliente.Save(clienteModel);
-                // Exibir uma tela de sucesso. OK
+                clienteRepository.Update(clienteModel);
 
                 TempData["mensagem"] = $"Cliente {clienteModel.Nome} editado com sucesso";
                 return RedirectToAction("Index");
             }
             else
             {
+                var listaRepresentantes = representanteRepository.FindAll();
+                ViewBag.representantes = listaRepresentantes;
+
                 return View(clienteModel);
             }
 

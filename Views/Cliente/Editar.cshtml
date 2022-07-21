@@ -43,6 +43,25 @@
                         <span class="text-danger" asp-validation-for="Observacao"></span>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label" asp-for="RepresentanteId">Representante</label>
+                        <select name="RepresentanteId">
+                            <option value="">Selecione</option>
+                            @foreach( var representante in ViewBag.representantes )
+                            {
+                                if ( representante.RepresentanteId == Model.RepresentanteId )
+                                {
+                                    <option selected value="@representante.RepresentanteId">@representante.NomeRepresentante</option>
+                                } else
+                                {
+                                    <option value="@representante.RepresentanteId">@representante.NomeRepresentante</option>
+                                }
+                            }
+                        </select>
+                        <span class="text-danger" asp-validation-for="RepresentanteId"></span>
+                    </div>
+
+
                     <a 
                         asp-action="Index" 
                         asp-controller="Cliente" 
