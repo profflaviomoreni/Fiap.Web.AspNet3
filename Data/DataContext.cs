@@ -23,5 +23,8 @@ namespace Fiap.Web.AspNet3.Data
         public DbSet<FornecedorModel> Fornecedores { get; set; }
 
 
+        public DbSet<ClienteModel> Clientes { get; set; }
+
+
     }
 }

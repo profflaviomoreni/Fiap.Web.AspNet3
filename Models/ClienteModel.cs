@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fiap.Web.AspNet3.Models
 {
+    [Table("Cliente")]
     public class ClienteModel
     {
 
         [Display(Name = "Id do Cliente")]
         [HiddenInput]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClienteId { get; set; }
 
         [Display(Name = "Nome do cliente")]
@@ -28,6 +32,12 @@ namespace Fiap.Web.AspNet3.Models
 
         [Display(Name = "Observação")]
         public string? Observacao { get; set; }
+
+
+        public int RepresentanteId { get; set; }
+
+        [ForeignKey("RepresentanteId")]
+        public RepresentanteModel? Representante { get; set; }
 
     }
 }

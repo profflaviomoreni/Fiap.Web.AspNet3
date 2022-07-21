@@ -6,6 +6,7 @@
         <tr>
             <th data-field="id">Id</th>
             <th data-field="name">Nome</th>
+            <th data-field="representante">Representante</th>
             <th class="actions" width="220">Ações</th>
         </tr>
     </thead>
@@ -15,6 +16,7 @@
             <tr>
                 <td data-field="id">@cliente.ClienteId</td>
                 <td data-field="name">@cliente.Nome</td>
+                <td data-field="representante">@cliente.Representante.NomeRepresentante</td>
                 <td class="actions" width="220">
 
                     <a  asp-controller="cliente" 
