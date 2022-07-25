@@ -17,6 +17,33 @@
             @Html.DisplayFor(model => model.NomeRepresentante)
         </dd>
     </dl>
+    <hr />
+
+    @if (Model.Clientes.Count > 0)
+    {
+        <h5>Clientes:</h5>
+        <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th data-field="id">Id</th>
+                    <th data-field="name">Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var cliente in Model.Clientes)
+                {
+                <tr>
+                    <td data-field="id">#@cliente.ClienteId</td>
+                    <td data-field="name">@cliente.Nome</td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+      }
+
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.RepresentanteId">Edit</a> |

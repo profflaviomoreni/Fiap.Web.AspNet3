@@ -28,7 +28,8 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var representanteModel = representanteRepository.FindById(id);
+            //var representanteModel = representanteRepository.FindById(id);
+            var representanteModel = representanteRepository.FindByIdWithClientes(id);
             if (representanteModel == null)
             {
                 return NotFound();
