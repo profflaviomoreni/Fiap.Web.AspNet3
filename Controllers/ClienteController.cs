@@ -2,6 +2,7 @@
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
@@ -29,11 +30,11 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Novo()
         {
-            var listaRepresentantes = representanteRepository.FindAll();
-            ViewBag.representantes = listaRepresentantes;
-
-            return View( new ClienteModel() );
+            ViewBag.representantes = ComboRepresentantes();
+            return View(new ClienteModel());
         }
+
+        
 
         [HttpPost]
         public IActionResult Novo(ClienteModel clienteModel)
@@ -48,9 +49,7 @@ namespace Fiap.Web.AspNet3.Controllers
             } 
             else
             {
-                var listaRepresentantes = representanteRepository.FindAll();
-                ViewBag.representantes = listaRepresentantes;
-
+                ViewBag.representantes = ComboRepresentantes();
                 return View(clienteModel);
             }
 
@@ -61,17 +60,10 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            var listaRepresentantes = representanteRepository.FindAll();
-            ViewBag.representantes = listaRepresentantes;
-
+            ViewBag.representantes = ComboRepresentantes();
             var clienteModel = clienteRepository.FindById(id);
-
             return View(clienteModel);
         }
-
-
-        
-
 
         [HttpPost]
         public IActionResult Editar(ClienteModel clienteModel)
@@ -85,9 +77,7 @@ namespace Fiap.Web.AspNet3.Controllers
             }
             else
             {
-                var listaRepresentantes = representanteRepository.FindAll();
-                ViewBag.representantes = listaRepresentantes;
-
+                ViewBag.representantes = ComboRepresentantes();
                 return View(clienteModel);
             }
 
@@ -108,6 +98,15 @@ namespace Fiap.Web.AspNet3.Controllers
         {
             return View();
         }
+
+
+        private SelectList ComboRepresentantes()
+        {
+            var listaRepresentantes = representanteRepository.FindAll();
+            var selectListRepresentantes = new SelectList(listaRepresentantes, "RepresentanteId", "NomeRepresentante");
+            return selectListRepresentantes;
+        }
+
 
     }
 }
