@@ -27,9 +27,25 @@ namespace Fiap.Web.AspNet3.Controllers
             //var listaClientes = clienteRepository.FindAllOrderByNomeAsc();
             //var listaClientes = clienteRepository.FindAllOrderByNomeDesc();
             //var listaClientes = clienteRepository.FindByNome("la");
-            var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante("la","",1);
-            return View(listaClientes);
+            //var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante("la","",1);
+            ViewBag.representantes = ComboRepresentantes();
+            return View(new List<ClienteModel>());
         }
+
+
+        [HttpPost]
+        public IActionResult Pesquisar(string NomePesquisa, string EmailPesquisa, int RepresentanteId)
+        {
+            NomePesquisa = NomePesquisa == null ? string.Empty : NomePesquisa;
+            EmailPesquisa = EmailPesquisa == null ? string.Empty : EmailPesquisa;
+
+            ViewBag.representantes = ComboRepresentantes();
+
+            var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante(NomePesquisa,EmailPesquisa,RepresentanteId);
+
+            return View("Index", listaClientes);
+        }
+
 
         [HttpGet]
         public IActionResult Novo()

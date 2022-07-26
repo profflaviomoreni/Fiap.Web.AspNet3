@@ -15,7 +15,31 @@
                 <a class="create btn btn-dark" asp-controller="Cliente" asp-action="Novo">Novo Cliente</a>
             </p>
 
-            <partial name="_ClienteItem" model="Model" />
+            <div class="jumbotron">
+                <form asp-action="Pesquisar">
+                    <div class="form-group">
+                        <label class="control-label">Pesquisar o Nome</label>
+                        <input class="form-control col-5" name="NomePesquisa" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pesquisar Email</label>
+                        <input class="form-control col-5" name="EmailPesquisa" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pesquisar Representante</label>
+                        <select class="form-control col-5" name="RepresentanteId" asp-items="@ViewBag.representantes">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+                </form>
+            </div>
+            <hr />
+
+            @if( Model.Count() > 0 ) {
+                <partial name="_ClienteItem" model="Model" />
+            }
 
         </div>
     </div>
