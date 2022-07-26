@@ -16,15 +16,88 @@ namespace Fiap.Web.AspNet3.Repository
 
         public List<ClienteModel> FindAll()
         {
-            //var listaClientes = context.Clientes.ToList<ClienteModel>();
             var listaClientes = context.Clientes.Include( c => c.Representante ).ToList();
 
             return listaClientes == null ? new List<ClienteModel>() : listaClientes;
         }
 
+
+        public List<ClienteModel> FindAllOrderByNomeAsc()
+        {
+            var listaClientes = 
+                context.Clientes
+                    .Include(c => c.Representante)
+                    .OrderBy(c => c.Nome)
+                    .ToList();
+
+            return listaClientes == null ? new List<ClienteModel>() : listaClientes;
+        }
+
+
+        public List<ClienteModel> FindAllOrderByNomeDesc()
+        {
+            var listaClientes =
+                context.Clientes
+                    .Include(c => c.Representante)
+                    .OrderByDescending(c => c.Nome)
+                    .ToList();
+
+            return listaClientes == null ? new List<ClienteModel>() : listaClientes;
+        }
+
+
+
+        public List<ClienteModel> FindByNome(string nome)
+        {
+            var listaClientes =
+                context.Clientes
+                    .Include(c => c.Representante)
+                    .Where(c => c.Nome.Contains(nome) )
+                        .OrderBy(c => c.Nome)
+                            .ToList();
+
+            return listaClientes == null ? new List<ClienteModel>() : listaClientes;
+
+        }
+
+
+        public List<ClienteModel> FindByNomeAndEmail(string nome, string email)
+        {
+
+            var listaClientes =
+                context.Clientes
+                    .Include(c => c.Representante)
+                    .Where( c => c.Nome.Contains(nome) && 
+                                 c.Email.Contains(email)   )
+                        .OrderBy(c => c.Nome)
+                            .ToList();
+
+            return listaClientes == null ? new List<ClienteModel>() : listaClientes;
+
+        }
+
+
+
+        public List<ClienteModel> FindByNomeAndEmailAndRepresentante(string nome, string email, int idRepresentante)
+        {
+
+            var listaClientes =
+                context.Clientes
+                    .Include(c => c.Representante)
+                    .Where(c => c.Nome.Contains(nome)   &&
+                                c.Email.Contains(email) &&
+                                ( 0 == idRepresentante || c.RepresentanteId == idRepresentante ) )
+                        .OrderBy(c => c.Nome)
+                            .ToList();
+
+
+            return listaClientes == null ? new List<ClienteModel>() : listaClientes;
+
+        }
+
+
         public ClienteModel FindById(int id)
         {
-            // var cliente = context.Clientes.Find(id);
             var cliente =
                 context.Clientes // SELECT campos
                     .Include(c => c.Representante) // Inner Join

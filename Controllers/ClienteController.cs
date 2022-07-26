@@ -23,7 +23,11 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var listaClientes = clienteRepository.FindAll();
+            //var listaClientes = clienteRepository.FindAll();
+            //var listaClientes = clienteRepository.FindAllOrderByNomeAsc();
+            //var listaClientes = clienteRepository.FindAllOrderByNomeDesc();
+            //var listaClientes = clienteRepository.FindByNome("la");
+            var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante("la","",1);
             return View(listaClientes);
         }
 
