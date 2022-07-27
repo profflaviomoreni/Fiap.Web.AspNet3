@@ -1,20 +1,20 @@
 ﻿using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
+using Fiap.Web.AspNet3.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
     public class RepresentanteController : Controller
     {
+        private readonly IRepresentanteRepository representanteRepository;
 
-        private readonly RepresentanteRepository representanteRepository;
-
-        public RepresentanteController(DataContext context)
+        public RepresentanteController(IRepresentanteRepository repository)
         {
-            representanteRepository = new RepresentanteRepository(context);
+            representanteRepository = repository;
         }
-
+        
 
         [HttpGet]
         public IActionResult Index()

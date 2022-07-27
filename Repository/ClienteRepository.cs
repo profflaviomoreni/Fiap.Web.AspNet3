@@ -1,10 +1,11 @@
 ﻿using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
+using Fiap.Web.AspNet3.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet3.Repository
 {
-    public class ClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
         public DataContext context { get; set; }
 
@@ -14,7 +15,7 @@ namespace Fiap.Web.AspNet3.Repository
         }
 
 
-        public List<ClienteModel> FindAll()
+        public IList<ClienteModel> FindAll()
         {
             var listaClientes = context.Clientes.Include( c => c.Representante ).ToList();
 
@@ -22,7 +23,7 @@ namespace Fiap.Web.AspNet3.Repository
         }
 
 
-        public List<ClienteModel> FindAllOrderByNomeAsc()
+        public IList<ClienteModel> FindAllOrderByNomeAsc()
         {
             var listaClientes = 
                 context.Clientes
@@ -34,7 +35,7 @@ namespace Fiap.Web.AspNet3.Repository
         }
 
 
-        public List<ClienteModel> FindAllOrderByNomeDesc()
+        public IList<ClienteModel> FindAllOrderByNomeDesc()
         {
             var listaClientes =
                 context.Clientes
@@ -47,7 +48,7 @@ namespace Fiap.Web.AspNet3.Repository
 
 
 
-        public List<ClienteModel> FindByNome(string nome)
+        public IList<ClienteModel> FindByNome(string nome)
         {
             var listaClientes =
                 context.Clientes
@@ -61,7 +62,7 @@ namespace Fiap.Web.AspNet3.Repository
         }
 
 
-        public List<ClienteModel> FindByNomeAndEmail(string nome, string email)
+        public IList<ClienteModel> FindByNomeAndEmail(string nome, string email)
         {
 
             var listaClientes =
@@ -78,7 +79,7 @@ namespace Fiap.Web.AspNet3.Repository
 
 
 
-        public List<ClienteModel> FindByNomeAndEmailAndRepresentante(string nome, string email, int idRepresentante)
+        public IList<ClienteModel> FindByNomeAndEmailAndRepresentante(string nome, string email, int idRepresentante)
         {
 
             var listaClientes =
