@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Fiap.Web.AspNet3.Models.ProdutoModel>
+
+<h1>Produtos</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdutoNome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdutoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdutoNome)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
