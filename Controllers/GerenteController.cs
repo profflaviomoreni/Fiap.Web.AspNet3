@@ -1,18 +1,16 @@
-﻿using Fiap.Web.AspNet3.Data;
-using Fiap.Web.AspNet3.Models;
-using Fiap.Web.AspNet3.Repository;
+﻿using Fiap.Web.AspNet3.Models;
+using Fiap.Web.AspNet3.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
     public class GerenteController : Controller
     {
-        private readonly GerenteRepository gerenteRepository;
+        private readonly IGerenteRepository gerenteRepository;
 
-        public GerenteController(DataContext context)
+        public GerenteController(IGerenteRepository _gerenteRepository)
         {
-            gerenteRepository = new GerenteRepository(context);
+            gerenteRepository = _gerenteRepository;
         }
 
         // GET: Gerente

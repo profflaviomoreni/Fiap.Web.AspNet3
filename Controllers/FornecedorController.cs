@@ -1,6 +1,5 @@
-﻿using Fiap.Web.AspNet3.Data;
-using Fiap.Web.AspNet3.Models;
-using Fiap.Web.AspNet3.Repository;
+﻿using Fiap.Web.AspNet3.Models;
+using Fiap.Web.AspNet3.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +7,11 @@ namespace Fiap.Web.AspNet3.Controllers
 {
     public class FornecedorController : Controller
     {
-        private readonly FornecedorRepository fornecedorRepository;
+        private readonly IFornecedorRepository fornecedorRepository;
 
-        public FornecedorController(DataContext context)
+        public FornecedorController(IFornecedorRepository _fornecedorRepository)
         {
-            fornecedorRepository = new FornecedorRepository(context);
+            fornecedorRepository = _fornecedorRepository;
         }
 
         public IActionResult Index()

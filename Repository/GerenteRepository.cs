@@ -1,9 +1,10 @@
 ﻿using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
+using Fiap.Web.AspNet3.Repository.Interface;
 
 namespace Fiap.Web.AspNet3.Repository
 {
-    public class GerenteRepository
+    public class GerenteRepository : IGerenteRepository
     {
 
         private readonly DataContext dataContext;

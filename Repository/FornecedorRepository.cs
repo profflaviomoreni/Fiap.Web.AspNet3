@@ -1,9 +1,10 @@
 ﻿using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
+using Fiap.Web.AspNet3.Repository.Interface;
 
 namespace Fiap.Web.AspNet3.Repository
 {
-    public class FornecedorRepository
+    public class FornecedorRepository : IFornecedorRepository
     {
 
         private readonly DataContext dataContext;
