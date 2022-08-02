@@ -17,7 +17,7 @@
             @Html.DisplayFor(model => model.ProdutoNome)
         </dd>
     </dl>
-    @if (Model.ProdutosLojas != null || Model.ProdutosLojas.Count > 0)
+    @if (Model.ProdutosLojas is not null || Model.ProdutosLojas.Count > 0)
     {
         <h5>Lojas</h5>
         @foreach (var lojas in Model.ProdutosLojas)
