@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet3.Models;
 using Microsoft.EntityFrameworkCore;
+using Fiap.Web.AspNet3.ViewModel;
 
 namespace Fiap.Web.AspNet3.Data
 {
@@ -29,6 +30,10 @@ namespace Fiap.Web.AspNet3.Data
         public DbSet<LojaModel> Lojas { get; set; }
 
         public DbSet<ProdutoLojaModel> ProdutosLojas { get; set; }
+
+        public DbSet<UsuarioModel> Usuarios { get; set; }
+
+        public DbSet<Fiap.Web.AspNet3.ViewModel.LoginViewModel>? LoginViewModel { get; set; }
 
 
     }
