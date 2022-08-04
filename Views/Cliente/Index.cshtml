@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ClienteModel>
+﻿@using Fiap.Web.AspNet3.ViewModel
+@model ClientePesquisaViewModel
 
 <div class="container">
     <div class="row">
@@ -19,15 +20,15 @@
                 <form asp-action="Pesquisar">
                     <div class="form-group">
                         <label class="control-label">Pesquisar o Nome</label>
-                        <input class="form-control col-5" name="NomePesquisa" />
+                        <input class="form-control col-5" asp-for="ClienteNome" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pesquisar Email</label>
-                        <input class="form-control col-5" name="EmailPesquisa" />
+                        <input class="form-control col-5" asp-for="ClienteEmail" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pesquisar Representante</label>
-                        <select class="form-control col-5" name="RepresentanteId" asp-items="@ViewBag.representantes">
+                        <select class="form-control col-5" asp-for="RepresentanteId" asp-items="@Model.Representantes">
                             <option value="">Selecione</option>
                         </select>
                     </div>
@@ -37,8 +38,40 @@
             </div>
             <hr />
 
-            @if( Model.Count() > 0 ) {
-                <partial name="_ClienteItem" model="Model" />
+            @if( Model.Clientes != null && Model.Clientes.Count > 0 )
+            {
+                <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Id</th>
+                            <th data-field="name">Nome</th>
+                            <th data-field="representante">Representante</th>
+                            <th class="actions" width="220">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach( var cliente in Model.Clientes) {
+                        <tr>
+                            <td data-field="id">@cliente.ClienteId</td>
+                            <td data-field="name">@cliente.Nome</td>
+                            <td data-field="representante">@cliente.Representante.NomeRepresentante</td>
+                            <td class="actions" width="220">
+
+                                <a  asp-controller="cliente" 
+                                    asp-action="detalhe" 
+                                    asp-route-id="@cliente.ClienteId"  
+                                    class="btn btn-info btn-sm">Detalhe</a>
+
+                                <a  asp-controller="cliente" 
+                                    asp-action="editar" 
+                                    asp-route-id="@cliente.ClienteId" 
+                                    class="btn btn-warning btn-sm">Editar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
             }
 
         </div>

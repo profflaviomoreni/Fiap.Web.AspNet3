@@ -7,6 +7,7 @@ namespace Fiap.Web.AspNet3.ViewModel
     {
 
         [HiddenInput]
+        [Key]
         public int UsuarioId { get; set; }
 
         [Required]

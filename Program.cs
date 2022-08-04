@@ -1,6 +1,9 @@
+using AutoMapper;
 using Fiap.Web.AspNet3.Data;
+using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Fiap.Web.AspNet3.Repository.Interface;
+using Fiap.Web.AspNet3.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,30 @@ var connectionString = builder.Configuration.GetConnectionString("databaseUrl");
 builder.Services.AddDbContext<DataContext>(options => 
     options.UseSqlServer(connectionString).EnableSensitiveDataLogging(true)
 );
+
+var mapperConfig = new AutoMapper.MapperConfiguration( c =>
+{
+    c.AllowNullCollections = true;
+
+    //Login <> Usuario
+    c.CreateMap<UsuarioModel, LoginViewModel>();
+    c.CreateMap<LoginViewModel, UsuarioModel>();
+
+    //Representante
+    c.CreateMap<RepresentanteModel, RepresentanteViewModel>();
+    c.CreateMap<RepresentanteViewModel, RepresentanteModel>();
+    //c.CreateMap<IList<RepresentanteViewModel>, IList<RepresentanteModel>>();
+
+
+    //Cliente
+    c.CreateMap<ClienteModel, ClienteViewModel>();
+    c.CreateMap<ClienteViewModel, ClienteModel>();
+    //c.CreateMap<IList<ClienteModel>, IList<ClienteViewModel>>();
+
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 
 builder.Services.AddScoped<IRepresentanteRepository, RepresentanteRepository>();

@@ -1,4 +1,5 @@
-﻿using Fiap.Web.AspNet3.Models;
+﻿using AutoMapper;
+using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository.Interface;
 using Fiap.Web.AspNet3.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace Fiap.Web.AspNet3.Controllers
     {
 
         private readonly IUsuarioRepository usuarioRepository;
+        private readonly IMapper mapper;
 
-        public LoginController(IUsuarioRepository _usuarioRepository)
+        public LoginController(IUsuarioRepository _usuarioRepository, IMapper _mapper)
         {
             usuarioRepository = _usuarioRepository;
+            mapper = _mapper;   
         }
 
 
@@ -25,9 +28,8 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel loginViewModel)
         {
-            var usuario = new UsuarioModel();
-            usuario.UsuarioEmail = loginViewModel.UsuarioEmail;
-            usuario.UsuarioSenha = loginViewModel.UsuarioSenha;
+
+            var usuario = mapper.Map<UsuarioModel>(loginViewModel);
 
             var usuarioRetorno = usuarioRepository.Login(usuario);
 

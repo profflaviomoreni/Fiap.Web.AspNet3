@@ -2,6 +2,7 @@
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Fiap.Web.AspNet3.Repository.Interface;
+using Fiap.Web.AspNet3.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,27 +25,45 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //var listaClientes = clienteRepository.FindAll();
-            //var listaClientes = clienteRepository.FindAllOrderByNomeAsc();
-            //var listaClientes = clienteRepository.FindAllOrderByNomeDesc();
-            //var listaClientes = clienteRepository.FindByNome("la");
-            //var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante("la","",1);
-            ViewBag.representantes = ComboRepresentantes();
-            return View(new List<ClienteModel>());
+            var vm = new ClientePesquisaViewModel();
+            vm.Representantes = ComboRepresentantes();
+
+            return View(vm);
         }
 
 
         [HttpPost]
-        public IActionResult Pesquisar(string NomePesquisa, string EmailPesquisa, int RepresentanteId)
+        public IActionResult Pesquisar(ClientePesquisaViewModel clientePesquisaViewModel)
         {
-            NomePesquisa = NomePesquisa == null ? string.Empty : NomePesquisa;
-            EmailPesquisa = EmailPesquisa == null ? string.Empty : EmailPesquisa;
+            
 
-            ViewBag.representantes = ComboRepresentantes();
+            var listaClientes = clienteRepository
+                                    .FindByNomeAndEmailAndRepresentante(
+                                        clientePesquisaViewModel.ClienteNome,
+                                        clientePesquisaViewModel.ClienteEmail,
+                                        clientePesquisaViewModel.RepresentanteId);
 
-            var listaClientes = clienteRepository.FindByNomeAndEmailAndRepresentante(NomePesquisa,EmailPesquisa,RepresentanteId);
+            var listaClientesVM = new List<ClienteViewModel>();
+            foreach (var cliente in listaClientes)
+            {
+                var clienteVM = new ClienteViewModel();
+                clienteVM.ClienteId = cliente.ClienteId;
+                clienteVM.Nome = cliente.Nome;
 
-            return View("Index", listaClientes);
+                var representanteVM = new RepresentanteViewModel();
+                representanteVM.RepresentanteId = cliente.Representante.RepresentanteId;
+                representanteVM.NomeRepresentante = cliente.Representante.NomeRepresentante;
+
+                clienteVM.Representante = representanteVM;
+
+                listaClientesVM.Add(clienteVM);
+            }
+
+
+            clientePesquisaViewModel.Clientes = listaClientesVM;
+            clientePesquisaViewModel.Representantes = ComboRepresentantes();
+
+            return View("Index", clientePesquisaViewModel);
         }
 
 
@@ -124,7 +143,18 @@ namespace Fiap.Web.AspNet3.Controllers
         private SelectList ComboRepresentantes()
         {
             var listaRepresentantes = representanteRepository.FindAll();
-            var selectListRepresentantes = new SelectList(listaRepresentantes, "RepresentanteId", "NomeRepresentante");
+
+            var listaRepresentantesVM = new List<RepresentanteViewModel>();
+            foreach (var representante in listaRepresentantes)
+            {
+                var representanteViewModel = new RepresentanteViewModel();
+                representanteViewModel.RepresentanteId = representante.RepresentanteId;
+                representanteViewModel.NomeRepresentante = representante.NomeRepresentante;
+
+                listaRepresentantesVM.Add(representanteViewModel);
+            }
+
+            var selectListRepresentantes = new SelectList(listaRepresentantesVM, "RepresentanteId", "NomeRepresentante");
             return selectListRepresentantes;
         }
 
