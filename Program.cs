@@ -27,6 +27,8 @@ var mapperConfig = new AutoMapper.MapperConfiguration( c =>
     //Representante
     c.CreateMap<RepresentanteModel, RepresentanteViewModel>();
     c.CreateMap<RepresentanteViewModel, RepresentanteModel>();
+            //.ForMember( r => r.Clientes, opt => opt.Ignore())
+            //.ForMember( r => r.Token, opt => opt.Ignore()).ReverseMap();
     //c.CreateMap<IList<RepresentanteViewModel>, IList<RepresentanteModel>>();
 
 
@@ -34,6 +36,7 @@ var mapperConfig = new AutoMapper.MapperConfiguration( c =>
     c.CreateMap<ClienteModel, ClienteViewModel>();
     c.CreateMap<ClienteViewModel, ClienteModel>();
     //c.CreateMap<IList<ClienteModel>, IList<ClienteViewModel>>();
+    //c.CreateMap<IList<ClienteViewModel>, IList<ClienteModel>>();
 
 });
 

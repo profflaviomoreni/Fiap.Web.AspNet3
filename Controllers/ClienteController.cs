@@ -1,4 +1,5 @@
-﻿using Fiap.Web.AspNet3.Data;
+﻿using AutoMapper;
+using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Fiap.Web.AspNet3.Repository.Interface;
@@ -13,11 +14,13 @@ namespace Fiap.Web.AspNet3.Controllers
 
         private readonly IClienteRepository clienteRepository;
         private readonly IRepresentanteRepository representanteRepository;
+        private readonly IMapper mapper;
 
-        public ClienteController(IClienteRepository _clienteRepository, IRepresentanteRepository _representanteRepository)
+        public ClienteController(IClienteRepository _clienteRepository, IRepresentanteRepository _representanteRepository, IMapper _mapper)
         {
             clienteRepository = _clienteRepository;
             representanteRepository = _representanteRepository;
+            mapper = _mapper;
         }
 
 
@@ -35,7 +38,6 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpPost]
         public IActionResult Pesquisar(ClientePesquisaViewModel clientePesquisaViewModel)
         {
-            
 
             var listaClientes = clienteRepository
                                     .FindByNomeAndEmailAndRepresentante(
@@ -43,22 +45,7 @@ namespace Fiap.Web.AspNet3.Controllers
                                         clientePesquisaViewModel.ClienteEmail,
                                         clientePesquisaViewModel.RepresentanteId);
 
-            var listaClientesVM = new List<ClienteViewModel>();
-            foreach (var cliente in listaClientes)
-            {
-                var clienteVM = new ClienteViewModel();
-                clienteVM.ClienteId = cliente.ClienteId;
-                clienteVM.Nome = cliente.Nome;
-
-                var representanteVM = new RepresentanteViewModel();
-                representanteVM.RepresentanteId = cliente.Representante.RepresentanteId;
-                representanteVM.NomeRepresentante = cliente.Representante.NomeRepresentante;
-
-                clienteVM.Representante = representanteVM;
-
-                listaClientesVM.Add(clienteVM);
-            }
-
+            var listaClientesVM = mapper.Map<IList<ClienteViewModel>>(listaClientes);
 
             clientePesquisaViewModel.Clientes = listaClientesVM;
             clientePesquisaViewModel.Representantes = ComboRepresentantes();
@@ -144,17 +131,10 @@ namespace Fiap.Web.AspNet3.Controllers
         {
             var listaRepresentantes = representanteRepository.FindAll();
 
-            var listaRepresentantesVM = new List<RepresentanteViewModel>();
-            foreach (var representante in listaRepresentantes)
-            {
-                var representanteViewModel = new RepresentanteViewModel();
-                representanteViewModel.RepresentanteId = representante.RepresentanteId;
-                representanteViewModel.NomeRepresentante = representante.NomeRepresentante;
-
-                listaRepresentantesVM.Add(representanteViewModel);
-            }
+            var listaRepresentantesVM = mapper.Map<List<RepresentanteViewModel>>(listaRepresentantes);
 
             var selectListRepresentantes = new SelectList(listaRepresentantesVM, "RepresentanteId", "NomeRepresentante");
+
             return selectListRepresentantes;
         }
 
