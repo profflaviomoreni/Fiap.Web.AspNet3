@@ -8,6 +8,11 @@
 
 <h4>Login do usuario</h4>
 <hr />
+
+@if ( ! String.IsNullOrEmpty((String) ViewBag.ErrorMessage) ) {
+    <div class="alert alert-warning" role="alert">@ViewBag.ErrorMessage</div>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Login">

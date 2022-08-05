@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fiap.Web.AspNet3.Controllers.Filters;
 using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
+    [FiapAuthFilter]
     public class ClienteController : Controller
     {
 
@@ -57,6 +59,14 @@ namespace Fiap.Web.AspNet3.Controllers
         [HttpGet]
         public IActionResult Novo()
         {
+
+            var isLogged = String.IsNullOrEmpty(HttpContext.Session.GetString("email")) ? false : true;
+            if (!isLogged)
+            {
+                ViewBag.ErrorMessage = "Usuário não autenticado";
+                return RedirectToAction("Index", "Login");
+            }
+
             ViewBag.representantes = ComboRepresentantes();
             return View(new ClienteModel());
         }

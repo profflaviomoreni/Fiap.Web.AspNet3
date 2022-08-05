@@ -1,4 +1,5 @@
-﻿using Fiap.Web.AspNet3.Data;
+﻿using Fiap.Web.AspNet3.Controllers.Filters;
+using Fiap.Web.AspNet3.Data;
 using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository;
 using Fiap.Web.AspNet3.Repository.Interface;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
+    [FiapAuthFilter]
     public class RepresentanteController : Controller
     {
         private readonly IRepresentanteRepository representanteRepository;

@@ -1,9 +1,11 @@
-﻿using Fiap.Web.AspNet3.Models;
+﻿using Fiap.Web.AspNet3.Controllers.Filters;
+using Fiap.Web.AspNet3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
+    [FiapLogFilter]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,6 +15,7 @@ namespace Fiap.Web.AspNet3.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();

@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var email = String.IsNullOrEmpty(Context.Session.GetString("email")) ? "" : Context.Session.GetString("email");
+    var nomeUsuario = String.IsNullOrEmpty(Context.Session.GetString("nome")) ? "" : Context.Session.GetString("nome");
+    var isLogged = String.IsNullOrEmpty(email) ? false : true;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,29 +28,40 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
-                        </li>
+                        @if (isLogged)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Representante" asp-action="Index">Representante</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Representante" asp-action="Index">Representante</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Gerente" asp-action="Index">Gerente</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Gerente" asp-action="Index">Gerente</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedor" asp-action="Index">Fornecedor</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedor" asp-action="Index">Fornecedor</a>
+                            </li>
+                        }
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produto</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if( isLogged )
+                        {
+                           <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li> 
+                        } else { 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -60,6 +76,13 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Fiap - AspNet Turma 3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            
+
+            @if( isLogged )
+            {
+                @String.Format(" - {0} - {1}", nomeUsuario, email);
+            }
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

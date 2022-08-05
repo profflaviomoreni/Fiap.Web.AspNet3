@@ -1,10 +1,12 @@
-﻿using Fiap.Web.AspNet3.Models;
+﻿using Fiap.Web.AspNet3.Controllers.Filters;
+using Fiap.Web.AspNet3.Models;
 using Fiap.Web.AspNet3.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet3.Controllers
 {
+    [FiapAuthFilter, FiapLogFilter]
     public class FornecedorController : Controller
     {
         private readonly IFornecedorRepository fornecedorRepository;
