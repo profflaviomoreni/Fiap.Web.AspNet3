@@ -2,6 +2,13 @@
 
 <h1>Produtos</h1>
 
+@if ( ! String.IsNullOrEmpty((String) TempData["mensagem"]) ) {
+    <div class="alert alert-warning" role="alert">@TempData["mensagem"]</div>
+}
+
+<p>
+    <a asp-action="Novo">Create New</a>
+</p>
 
 <table class="table">
     <thead>

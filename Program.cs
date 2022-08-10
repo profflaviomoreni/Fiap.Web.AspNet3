@@ -40,6 +40,15 @@ var mapperConfig = new AutoMapper.MapperConfiguration( c =>
     //c.CreateMap<IList<ClienteModel>, IList<ClienteViewModel>>();
     //c.CreateMap<IList<ClienteViewModel>, IList<ClienteModel>>();
 
+    //Loja
+    c.CreateMap<LojaModel, LojaViewModel>();
+    c.CreateMap<LojaViewModel, LojaModel>();
+
+    //Produto
+    c.CreateMap<ProdutoViewModel, ProdutoModel>()
+        .ForMember(p => p.ProdutosLojas, op => op.Ignore());
+    c.CreateMap<ProdutoModel, ProdutoViewModel>();
+
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
@@ -52,6 +61,7 @@ builder.Services.AddScoped<IGerenteRepository, GerenteRepository>();
 builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ILojaRepository, LojaRepository>();
 
 var app = builder.Build();
 

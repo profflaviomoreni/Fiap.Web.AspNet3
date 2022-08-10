@@ -26,5 +26,31 @@ namespace Fiap.Web.AspNet3.Repository
                         .ThenInclude( pl => pl.Loja ) // INNER JOIN
                     .SingleOrDefault( p => p.ProdutoId == id ); // WHERE
         }
+
+
+        public int Insert(ProdutoModel produtoModel)
+        {
+            dataContext.Produtos.Add(produtoModel);
+            dataContext.SaveChanges();
+            return produtoModel.ProdutoId;
+        }
+
+        public void Delete(int id)
+        {
+            dataContext.Produtos.Remove(new ProdutoModel() { ProdutoId = id });
+            dataContext.SaveChanges();
+        }
+
+        public void Update(ProdutoModel produtoModelNovo)
+        {
+            var produtoAtual = FindById(produtoModelNovo.ProdutoId);
+            produtoAtual.ProdutoNome = produtoModelNovo.ProdutoNome;
+            produtoAtual.ProdutosLojas = produtoModelNovo.ProdutosLojas;
+
+            dataContext.Produtos.Update(produtoAtual);
+            dataContext.SaveChanges();
+
+        }
+
     }
 }
